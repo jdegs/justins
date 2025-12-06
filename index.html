@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Justin Liu</title>
+  <meta name="description" content="Justin Liu — links." />
+  <link rel="canonical" href="https://justins.cc/" />
+
+  <!-- Basic social preview -->
+  <meta property="og:title" content="Justin Liu" />
+  <meta property="og:description" content="Links." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://justins.cc/" />
+
+  <style>
+    :root{
+      /* warm, editorial palette */
+      --paper: #f4f0e7;
+      --paper-2: #efe9dd;
+      --ink: #141414;
+      --muted: #4b4b4b;
+      --line: rgba(20,20,20,.14);
+      --wash: rgba(20,20,20,.035);
+      --accent: #b85b45; /* muted terracotta */
+      --radius: 18px;
+
+      /* fluid spacing for “no scroll” */
+      --pad: clamp(16px, 3.2vw, 42px);
+      --gap: clamp(10px, 1.6vw, 16px);
+      --name: clamp(34px, 6vw, 58px);
+      --tag: clamp(14px, 2.2vw, 18px);
+      --link: clamp(14px, 2vw, 16px);
+      --linkPadY: clamp(10px, 1.6vw, 14px);
+      --linkPadX: clamp(12px, 2vw, 16px);
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 600px at 25% 18%, rgba(184,91,69,.08), transparent 55%),
+        radial-gradient(700px 480px at 82% 32%, rgba(20,20,20,.06), transparent 62%),
+        linear-gradient(180deg, var(--paper), var(--paper-2));
+      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Keep everything within the viewport without scrolling */
+    .viewport{
+      min-height: 100svh;
+      padding: var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .frame{
+      width: min(860px, 100%);
+      max-height: calc(100svh - (var(--pad) * 2));
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
+    header{
+      display: grid;
+      gap: 10px;
+    }
+
+    .name{
+      font-size: var(--name);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin: 0;
+      position: relative;
+      width: fit-content;
+    }
+
+    /* subtle “editorial underline” */
+    .name::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0.06em;
+      width: 100%;
+      height: 0.22em;
+      background: rgba(184,91,69,.22);
+      z-index: -1;
+      border-radius: 999px;
+      transform: skewX(-10deg);
+    }
+
+    .tagline{
+      margin: 0;
+      font-size: var(--tag);
+      line-height: 1.4;
+      color: var(--muted);
+      max-width: 52ch;
+    }
+
+    main{
+      /* ensure the link area doesn’t overflow the viewport */
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
+    .links{
+      min-height: 0;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    a.link{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: var(--linkPadY) var(--linkPadX);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.35);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      outline: none;
+    }
+
+    a.link:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.48);
+      border-color: rgba(20,20,20,.22);
+    }
+
+    a.link:focus-visible{
+      box-shadow: 0 0 0 4px rgba(184,91,69,.18);
+      border-color: rgba(184,91,69,.55);
+    }
+
+    .left{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .icon{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--wash);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .icon svg{
+      width: 18px;
+      height: 18px;
+      stroke: var(--ink);
+    }
+
+    .label{
+      font-size: var(--link);
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chev{
+      opacity: .55;
+      flex: 0 0 auto;
+    }
+
+    footer{
+      margin-top: 2px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      color: rgba(20,20,20,.55);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    footer a{
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted transparent;
+    }
+    footer a:hover{ border-bottom-color: currentColor; }
+
+    /* Tighten vertical density on short screens to preserve “no scroll” */
+    @media (max-height: 700px){
+      :root{
+        --gap: clamp(8px, 1.2vw, 12px);
+        --linkPadY: clamp(8px, 1.2vw, 12px);
+        --name: clamp(30px, 5.2vw, 46px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      a.link{ transition: none; }
+      a.link:hover{ transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="viewport">
+    <div class="frame">
+      <header>
+        <h1 class="name" id="name"></h1>
+        <p class="tagline" id="tagline"></p>
+      </header>
+
+      <main>
+        <div class="links" id="links"></div>
+      </main>
+
+      <footer>
+        <span>© <span id="year"></span> <span id="footerName"></span></span>
+        <span><a href="https://justins.cc/" aria-label="Home">justins.cc</a></span>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Edit only this object to expand the page.
+    const site = {
+      name: "Justin Liu",
+      tagline: "Thinker / writer.",
+      links: [
+        { label: "LinkedIn", url: "https://www.linkedin.com/", icon: "linkedin" },
+        { label: "GitHub",   url: "https://github.com/",        icon: "github"   },
+
+        // Add more like this:
+        // { label: "CV", url: "/cv.pdf", icon: "file" },
+        // { label: "Email", url: "mailto:you@justins.cc", icon: "mail" },
+      ],
+    };
+
+    const icons = {
+      linkedin: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6.5 10.2V19" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6.5 7.1h.01" stroke-width="4" stroke-linecap="round"/>
+          <path d="M10.5 19v-4.6c0-2.4 2.8-2.6 2.8 0V19" stroke-width="2" stroke-linecap="round"/>
+          <path d="M13.3 14.4c0-3.1 4.8-3.4 4.8.2V19" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      `,
+      github: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 19c-4 1.5-4-2-5-2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 23v-3.2c0-1 .35-1.7.9-2.2-2.8-.3-5.7-1.4-5.7-6.2 0-1.2.42-2.3 1.15-3.1-.3-1.1 0-2.8.1-3.1 0 0 .95-.3 3.15 1.2a10.8 10.8 0 0 1 5.9 0c2.2-1.5 3.15-1.2 3.15-1.2.1.3.4 2 .1 3.1.72.8 1.15 1.9 1.15 3.1 0 4.8-2.9 5.9-5.7 6.2.55.55.95 1.45.95 2.95V23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `,
+      file: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M7 3h7l3 3v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" stroke-width="2"/>
+          <path d="M14 3v4h4" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      `,
+      mail: `
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" stroke-width="2"/>
+          <path d="M22 8l-10 7L2 8" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      `
+    };
+
+    const chev = `
+      <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `;
+
+    const $ = (id) => document.getElementById(id);
+
+    $("name").textContent = site.name;
+    $("tagline").textContent = site.tagline;
+    $("footerName").textContent = site.name;
+    $("year").textContent = new Date().getFullYear();
+
+    const links = $("links");
+    site.links.forEach(l => {
+      const a = document.createElement("a");
+      a.className = "link";
+      a.href = l.url;
+      a.target = l.url.startsWith("http") ? "_blank" : "_self";
+      a.rel = l.url.startsWith("http") ? "noopener noreferrer" : "";
+      a.setAttribute("aria-label", l.label);
+
+      a.innerHTML = `
+        <div class="left">
+          <div class="icon">${icons[l.icon] || icons.file}</div>
+          <div class="label">${l.label}</div>
+        </div>
+        ${chev}
+      `;
+      links.appendChild(a);
+    });
+  </script>
+</body>
+</html>
